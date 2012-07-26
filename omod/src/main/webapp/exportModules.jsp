@@ -8,6 +8,19 @@
 		jQuery("a#toggleLink").click(function () {
 			jQuery(".dependencies").toggle();
 			});
+		
+		jQuery("a#customExporter").click(function() {
+			var selectedChk = '';
+			 jQuery("input:checkbox:checked").each(function() {
+		         selectedChk += jQuery(this).val()+"-";
+		     });
+			 if(selectedChk == ''){
+				 alert("Must select modules to download");
+			 }else{
+			 window.location.href = "${pageContext.request.contextPath}/module/omodexport/exportFile.form?exportType=CUSTOM&moduleId="+selectedChk;
+			  }
+			
+		});
 	});
 </script>
 

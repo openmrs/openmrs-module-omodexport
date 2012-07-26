@@ -21,7 +21,7 @@
 	<li
 		<c:if test='<%= request.getRequestURI().contains("/exportModules") %>'>class="active"</c:if>>
 		<a
-		href="${pageContext.request.contextPath}/module/omodexport/exportFile.form?moduleId=${moduleMap.key.moduleId}&exportType=CUSTOM"><spring:message
+		id="customExporter" href="#"><spring:message
 				code="omodexport.export.selected" /></a>
 	</li>
 	

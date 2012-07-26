@@ -58,6 +58,10 @@ public class OmodExportUtil {
 			Module module = ModuleFactory.getModuleById(moduleId);
 			exportModuleWithDependecies(module, response);
 		}
+		if (et == ExportType.CUSTOM) {
+			exportSelectedModules(moduleId, response);
+		}
+		
 
 	}
 
@@ -104,6 +108,24 @@ public class OmodExportUtil {
 		}
 		files.add(module.getFile());
 
+		response.setContentType("application/zip");
+		response.setHeader("Content-Disposition",
+				"attachment; filename=\"modules.ZIP\"");
+
+		ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
+
+		zipFiles(files, out);
+	}
+
+	public static void exportSelectedModules(String moduleId,
+			HttpServletResponse response) throws IOException {
+		// Split the id string into an array of id's
+		String[] moduleIds = moduleId.split("-");
+		List<File> files = new ArrayList<File>();
+		for (String mId : moduleIds) {
+			Module m = ModuleFactory.getModuleById(mId);
+			files.add(m.getFile());
+		}
 		response.setContentType("application/zip");
 		response.setHeader("Content-Disposition",
 				"attachment; filename=\"modules.ZIP\"");
