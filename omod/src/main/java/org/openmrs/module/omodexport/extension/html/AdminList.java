@@ -44,7 +44,7 @@ public class AdminList extends AdministrationSectionExt {
 	 */
 	public Map<String, String> getLinks() {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("/module/omodexport/export.form", "omodexport.export");
+		map.put("/module/omodexport/exportModules.form", "omodexport.exportModules");
 		return map;
 	}
 	

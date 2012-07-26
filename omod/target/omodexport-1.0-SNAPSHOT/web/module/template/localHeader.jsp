@@ -7,12 +7,12 @@
 	<li
 		<c:if test='<%= request.getRequestURI().contains("/manage") %>'>class="active"</c:if>>
 		<a
-		href="${pageContext.request.contextPath}/module/omodexport/manage.form"><spring:message
+		href="${pageContext.request.contextPath}/admin/modules/module.list"><spring:message
 				code="omodexport.manage" /></a>
 	</li>
 	
 	<!-- Add further links here -->
 </ul>
 <h2>
-	<spring:message code="omodexport.title" />
+	<spring:message code="omodexport.exportModules" />
 </h2>
