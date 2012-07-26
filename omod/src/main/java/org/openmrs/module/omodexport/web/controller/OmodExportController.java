@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * The main controller.
  */
 @Controller
-public class OmodExportManageController {
+public class OmodExportController {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
@@ -59,7 +59,7 @@ public class OmodExportManageController {
 	}
 	
 	@RequestMapping("/module/omodexport/exportFile")
-	public void removeRwandaPrimaryCareIndicator(
+	public void exportModulesToFile(
 		    @RequestParam(required=false, value="moduleId") String moduleId,
 	        @RequestParam(required=false, value="exportType") String exportType,
 			HttpServletRequest request,
