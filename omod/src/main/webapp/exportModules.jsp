@@ -36,7 +36,9 @@
 				<td>
 				<a href="${pageContext.request.contextPath}/module/omodexport/exportFile.form?moduleId=${moduleMap.key.moduleId}&exportType=SINGLE"><spring:message code="omodexport.export.single" /></a>
 				</td>
-				<td><spring:message code="omodexport.export.withDependencies" /></td>
+				<td>
+				<a href="${pageContext.request.contextPath}/module/omodexport/exportFile.form?moduleId=${moduleMap.key.moduleId}&exportType=WITH_DEPENDECIES"><spring:message code="omodexport.export.withDependencies" /></a>
+				</td>
 			</tr>
 			<c:forEach var="dependency" items="${moduleMap.value}">
 				<tr class="dependencies">

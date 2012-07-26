@@ -54,6 +54,10 @@ public class OmodExportUtil {
 		if (et == ExportType.ALL) {
 			exportAllModules(response);
 		}
+		if (et == ExportType.WITH_DEPENDECIES) {
+			Module module = ModuleFactory.getModuleById(moduleId);
+			exportModuleWithDependecies(module, response);
+		}
 
 	}
 
@@ -62,7 +66,8 @@ public class OmodExportUtil {
 		File file = module.getFile();
 		response.setContentLength(new Long(file.length()).intValue());
 		response.setContentType("application/zip");
-		response.setHeader("Content-Disposition", "attachment; filename=\""+ file.getName() + "\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ file.getName() + "\"");
 		try {
 			FileCopyUtils.copy(new FileInputStream(file),
 					response.getOutputStream());
@@ -71,8 +76,9 @@ public class OmodExportUtil {
 		}
 
 	}
-	
-	public static void exportAllModules(HttpServletResponse response) throws IOException {
+
+	public static void exportAllModules(HttpServletResponse response)
+			throws IOException {
 
 		Collection<Module> modules = ModuleFactory.getStartedModules();
 		List<File> files = new ArrayList<File>();
@@ -80,27 +86,46 @@ public class OmodExportUtil {
 			files.add(module.getFile());
 		}
 		response.setContentType("application/zip");
-		response.setHeader("Content-Disposition", "attachment; filename=\"modules.ZIP\"");
+		response.setHeader("Content-Disposition",
+				"attachment; filename=\"modules.ZIP\"");
 
-		ZipOutputStream out = new ZipOutputStream( response.getOutputStream());  
+		ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
 
 		zipFiles(files, out);
 	}
-	
-	
+
+	public static void exportModuleWithDependecies(Module module,
+			HttpServletResponse response) throws IOException {
+		List<File> files = new ArrayList<File>();
+		List<String> dependecies = module.getRequiredModules();
+		for (String name : dependecies) {
+			Module m = ModuleFactory.getModuleByPackage(name);
+			files.add(m.getFile());
+		}
+		files.add(module.getFile());
+
+		response.setContentType("application/zip");
+		response.setHeader("Content-Disposition",
+				"attachment; filename=\"modules.ZIP\"");
+
+		ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
+
+		zipFiles(files, out);
+	}
+
 	public static void zipFiles(List<File> files, ZipOutputStream out)
-	throws FileNotFoundException, IOException {
+			throws FileNotFoundException, IOException {
 		byte[] buffer = new byte[4096]; // Create a buffer for copying
 		int bytesRead;
 
 		for (File f : files) {
 			if (f.isDirectory())
-				continue;//Ignore directory
+				continue;// Ignore directory
 			FileInputStream in = new FileInputStream(f); // Stream to read file
 			out.putNextEntry(new ZipEntry(f.getName())); // Store entry
 			while ((bytesRead = in.read(buffer)) != -1)
 				out.write(buffer, 0, bytesRead);
-			in.close(); 
+			in.close();
 		}
 
 		out.close();
