@@ -33,8 +33,10 @@
 					value="${moduleMap.key.moduleId}" />${moduleMap.key.name}</td>
 				<td>${moduleMap.key.version}</td>
 				<td></td>
-				<td></td>
-				<td></td>
+				<td>
+				<a href="${pageContext.request.contextPath}/module/omodexport/exportFile.form?moduleId=${moduleMap.key.moduleId}&exportType=SINGLE"><spring:message code="omodexport.export.single" /></a>
+				</td>
+				<td><spring:message code="omodexport.export.withDependencies" /></td>
 			</tr>
 			<c:forEach var="dependency" items="${moduleMap.value}">
 				<tr class="dependencies">

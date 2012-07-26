@@ -17,13 +17,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
+import org.openmrs.module.omodexport.util.OmodExportUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * The main controller.
@@ -51,6 +56,16 @@ public class OmodExportManageController {
 
 		}
 		model.addAttribute("modules", moduleAndDependencies);
+	}
+	
+	@RequestMapping("/module/omodexport/exportFile")
+	public void removeRwandaPrimaryCareIndicator(
+		    @RequestParam(required=false, value="moduleId") String moduleId,
+	        @RequestParam(required=false, value="exportType") String exportType,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		OmodExportUtil.doExport(moduleId, exportType, response);
+		return;
 	}
 
 }
