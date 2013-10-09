@@ -32,7 +32,7 @@ import org.openmrs.module.ModuleFactory;
 import org.springframework.util.FileCopyUtils;
 
 /**
- *
+ * Utility methods that allow you to export a module or a set of selected modules
  */
 public class OmodExportUtil {
 	
@@ -60,6 +60,15 @@ public class OmodExportUtil {
 		
 	}
 	
+	/**
+	 * Utility method which checks the type of export and calls the appropriate method
+	 * 
+	 * @param moduleId -The id of the module to export or a dash separated sting of module Id's to
+	 *            do the export
+	 * @param exportType -One of the possible export types (SINGLE,CUSTOM,WITH_DEPENDECIES or ALL)
+	 * @param response
+	 * @throws IOException
+	 */
 	public static void doExport(String moduleId, String exportType, HttpServletResponse response) throws IOException {
 		
 		switch (ExportType.valueOf(exportType)) {
@@ -86,6 +95,12 @@ public class OmodExportUtil {
 		
 	}
 	
+	/**
+	 * Utility method for exporting a single module
+	 * 
+	 * @param module -The module to export
+	 * @param response
+	 */
 	public static void exportSingleModule(Module module, HttpServletResponse response) {
 		File file = module.getFile();
 		response.setContentLength(new Long(file.length()).intValue());
@@ -100,6 +115,13 @@ public class OmodExportUtil {
 		
 	}
 	
+	/**
+	 * Utility module for exporting all modules. The exported modules will be in a zip file called
+	 * "modules.zip"
+	 * 
+	 * @param response
+	 * @throws IOException
+	 */
 	public static void exportAllModules(HttpServletResponse response) throws IOException {
 		
 		Collection<Module> modules = ModuleFactory.getStartedModules();
@@ -115,6 +137,14 @@ public class OmodExportUtil {
 		zipFiles(files, out);
 	}
 	
+	/**
+	 * Utility method for exporting a module with its dependencies
+	 * 
+	 * @param module -The module to export. It will be exported with all its dependencies and
+	 *            compressed in a file called "modules.zip"
+	 * @param response
+	 * @throws IOException
+	 */
 	public static void exportModuleWithDependecies(Module module, HttpServletResponse response) throws IOException {
 		List<File> files = new ArrayList<File>();
 		List<String> dependecies = module.getRequiredModules();
@@ -132,6 +162,14 @@ public class OmodExportUtil {
 		zipFiles(files, out);
 	}
 	
+	/**
+	 * Utility method for exporting a set of selected modules. The select modules will be exported
+	 * in zip file called "modules.zip"
+	 * 
+	 * @param moduleId -Dash-separated list of the module Ids
+	 * @param response
+	 * @throws IOException
+	 */
 	public static void exportSelectedModules(String moduleId, HttpServletResponse response) throws IOException {
 		// Split the id string into an array of id's
 		String[] moduleIds = moduleId.split("-");
@@ -148,6 +186,14 @@ public class OmodExportUtil {
 		zipFiles(files, out);
 	}
 	
+	/**
+	 * Utility method for zipping a list of files
+	 * 
+	 * @param files -The list of files to zip
+	 * @param out
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public static void zipFiles(List<File> files, ZipOutputStream out) throws FileNotFoundException, IOException {
 		byte[] buffer = new byte[4096]; // Create a buffer for copying
 		int bytesRead;
