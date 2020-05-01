@@ -14,57 +14,30 @@
 package org.openmrs.module.omodexport;
 
 
-import org.apache.commons.logging.Log; 
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.BaseModuleActivator;
 import org.openmrs.module.ModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class OmodExportActivator implements ModuleActivator {
+public class OmodExportActivator extends BaseModuleActivator {
 	
 	protected Log log = LogFactory.getLog(getClass());
-		
-	/**
-	 * @see ModuleActivator#willRefreshContext()
-	 */
-	public void willRefreshContext() {
-		log.info("Refreshing Omod Export Module");
-	}
-	
-	/**
-	 * @see ModuleActivator#contextRefreshed()
-	 */
-	public void contextRefreshed() {
-		log.info("Omod Export Module refreshed");
-	}
-	
-	/**
-	 * @see ModuleActivator#willStart()
-	 */
-	public void willStart() {
-		log.info("Starting Omod Export Module");
-	}
-	
+
 	/**
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("Omod Export Module started");
+		log.info("Child Growth Tracker module started");
 	}
-	
-	/**
-	 * @see ModuleActivator#willStop()
-	 */
-	public void willStop() {
-		log.info("Stopping Omod Export Module");
-	}
-	
+
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("Omod Export Module stopped");
+		log.info("Child Growth Tracker module stopped");
 	}
-		
+
 }
