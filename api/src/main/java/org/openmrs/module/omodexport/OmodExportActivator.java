@@ -30,14 +30,14 @@ public class OmodExportActivator extends BaseModuleActivator {
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("Child Growth Tracker module started");
+		log.info("OMOD Export module started");
 	}
 
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("Child Growth Tracker module stopped");
+		log.info("OMOD Export module stopped");
 	}
 
 }
